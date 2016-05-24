@@ -39,16 +39,6 @@ public class ServiceTest {
     }
 
 
-    @Test
-    public void getSchoolData() throws Exception {
-
-
-
-        HrsbService hrsbService = new HrsbService(1333,"south park");
-        hrsbService.getSchoolData();
-        ShadowApplication.runBackgroundTasks();
-    }
-
     public  String readAsset(AssetManager mgr, String path) {
         String contents = "";
         InputStream is = null;
@@ -83,58 +73,22 @@ public class ServiceTest {
     @Test
     public void getDataFromLocalDB() throws Exception {
         Context context = RuntimeEnvironment.application.getApplicationContext();
-        SugarContext.init(context);
-        List<SchoolData> school= SchoolData.listAll(SchoolData.class);
-        for(int i=0;i<school.size();i++){
-            SchoolData ss=(SchoolData)school.get(i);
-            System.out.println(ss.getNumber());
-            System.out.println(ss.getWebdata());
-        }
-    }
-    @org.junit.Test
-    public void addition_isCorrect() throws Exception {
-
-        Context context = RuntimeEnvironment.application.getApplicationContext();
-        SugarContext.init(context);
         AssetManager mgr=context.getAssets();
-
         String webContent=readAsset(mgr,"test_school_data.html");
         SchoolDataUtil schoolDataUtil = new SchoolDataUtil();
 
-        String schoolInformation= schoolDataUtil.getSchoolData(1333,webContent);
-
-
-
-        List<SchoolData> schoolRecords = SchoolData.listAll(SchoolData.class);
-        for(int i=0;i<schoolRecords.size();i++){
-            SchoolData ss=(SchoolData)schoolRecords.get(i);
-            System.out.println(ss.getNumber());
-            System.out.println(ss.getWebdata());
-        }
-        System.out.println(schoolRecords.size());
-        String queryNumber ="1333";
-        String queryStreetName="south park";
-        List<SchoolData> school= SchoolData.find(SchoolData.class,"number = ? and name =?",queryNumber,queryStreetName );
+        String schoolInformation= schoolDataUtil.getSchoolData(1102,webContent);
+        System.out.println("schoolInformation="+schoolInformation);
+        SchoolData schoolData=new SchoolData("1102","south park",schoolInformation);
+        schoolData.save();
+        List<SchoolData> school= SchoolData.find(SchoolData.class,"number = ? and name =?","1102","south park" );
         for(int i=0;i<school.size();i++){
             SchoolData ss=(SchoolData)school.get(i);
             System.out.println(ss.getNumber());
             System.out.println(ss.getWebdata());
+            assertEquals("1102",ss.getNumber());
         }
-        /*
-        Context context = RuntimeEnvironment.application.getApplicationContext();
-        AssetManager mgr=context.getAssets();
-        TestReadFiles ff=new TestReadFiles();
-        String webContent=ff.readAsset(mgr,"n11.html");
-        SchoolDataUtil schoolDataUtil = new SchoolDataUtil();
-
-        String schoolsUrl= schoolDataUtil.querySchoolsUrlByNumber(1333,webContent);
-
-        System.out.println("schoolsUrl=  "+schoolsUrl);
-
-        String schoolInformation=schoolDataUtil.getSchoolInformation(schoolsUrl);
-
-        */
-        assertEquals(4, 2 + 2);
     }
+
 
 }

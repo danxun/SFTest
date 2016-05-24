@@ -28,13 +28,13 @@
             android:inputType="number"
             android:ems="10"
             android:id="@+id/editText_number"
-            android:text="1333" />
+            android:text="5311" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText_streetName"
-            android:text="south park st" />
+            android:text="south st" />
 
         <Button
             android:layout_width="match_parent"
