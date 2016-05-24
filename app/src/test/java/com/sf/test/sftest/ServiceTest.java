@@ -25,10 +25,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
-/**
- * To work on unit tests, switch the Test Artifact in the Build Variants view.
- */
-
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class ServiceTest {
